@@ -15,7 +15,6 @@ function* getInitList() {
 }
 
 function* mySaga() {
-    //yield takeLatest("USER_FETCH_REQUESTED", fetchUser);
     yield takeEvery(GET_INIT_LIST, getInitList);
 }
   
