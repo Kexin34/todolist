@@ -1,18 +1,17 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import reducer from "./reducer";
-import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
+import todoSagas from './sagas';
+
+const sagaMiddleware = createSagaMiddleware();
 
 //这样既支持windows redux中间件，同时也引入了redux thunk
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
 
-const enhancer = composeEnhancers(
-    applyMiddleware(thunk),
-    );
+const enhancer = composeEnhancers(applyMiddleware(sagaMiddleware));
 
-const store = createStore(
-    reducer, enhancer
-    //通过redux创建store时需要使用thunk这个中间件, __REDUX_DEVTOOLS_EXTENSION__也是中间件
-);
-
+const store = createStore(reducer, enhancer);
+//运行saga
+sagaMiddleware.run(todoSagas);
 
 export default store;
