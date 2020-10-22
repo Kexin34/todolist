@@ -1,5 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TodoList from './TodoList';
+import { Provider } from 'react-redux';
+import store from './store';
+// provider就是一个组件,react-redux提供的核心API
 
-ReactDOM.render(<TodoList />, document.getElementById('root'));
+const App = (
+    <Provider store={store}>
+        <TodoList />
+    </Provider>
+);
+
+
+
+ReactDOM.render(App, document.getElementById('root'));

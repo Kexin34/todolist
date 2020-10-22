@@ -1,4 +1,3 @@
-import { CHANGE_INPUT_VALUE, ADD_TODO_ITEM, DELETE_TODO_ITEM, INIT_LIST_ACTION } from './actionTypes'
 
 const defaultState = {
     inputValue: '',
@@ -6,30 +5,16 @@ const defaultState = {
 }
 
 export default (state = defaultState, action) => {
-    // state存放的是整个图书馆里所有图书的信息
-    if (action.type === CHANGE_INPUT_VALUE) {
-        const newState = JSON.parse(JSON.stringify(state));//深拷贝
-        newState.inputValue = action.value;
-        return newState;
+    if (action.type === 'change_input_value'){
+        const newSate = JSON.parse(JSON.stringify(state));
+        newSate.inputValue = action.value;
+        return newSate;
     }
-    if (action.type === INIT_LIST_ACTION) {
-        const newState = JSON.parse(JSON.stringify(state));//深拷贝
-        newState.list = action.data;
-        return newState;
+    if (action.type === 'add_item'){
+        const newSate = JSON.parse(JSON.stringify(state));
+        newSate.list.push(newSate.inputValue);
+        newSate.inputValue = '';
+        return newSate;
     }
-    // 按钮submit信息到list中
-    if (action.type === ADD_TODO_ITEM) {
-        const newState = JSON.parse(JSON.stringify(state));
-        newState.list.push(newState.inputValue);
-        newState.inputValue= '';
-        return newState;
-    }
-
-    if (action.type === DELETE_TODO_ITEM) {
-        const newState = JSON.parse(JSON.stringify(state));
-        newState.list.splice(action.index, 1);
-        return newState;
-    }
-
     return state;
 }
